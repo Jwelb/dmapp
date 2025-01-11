@@ -2,12 +2,23 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ColorList from '../components/ColorList';
+import Dice from '../components/dice';
 
 // create a component
+// we are going to use the ColorList component here
+// we are going to pass a prop to the ColorList component
 const Home = () => {
     return (
         <View style={styles.container}>
-            <ColorList barColor='black'></ColorList>
+            <View>
+                <Dice></Dice>
+            </View>
+            <View>
+                <Text>This is where the campaigns will go</Text>
+            </View>
+            <View>
+                <ColorList barColor='#362645'></ColorList>
+            </View>
         </View>
     );
 };
@@ -17,8 +28,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#2c3e50',
+        backgroundColor: '#1A1221',
     },
 });
 
