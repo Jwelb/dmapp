@@ -14,7 +14,7 @@ const Home = () => {
                 <Dice></Dice>
             </View>
             <View>
-                <Text>This is where the campaigns will go</Text>
+                <Text style={styles.text}>This is where the campaigns will go</Text>
             </View>
             <View>
                 <ColorList barColor='#362645'></ColorList>
@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#1A1221',
     },
+    text: {
+        color: 'white',
+    }
 });
 
 //make this component available to the app
