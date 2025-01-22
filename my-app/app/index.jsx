@@ -1,25 +1,29 @@
-//import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import ColorList from '../components/ColorList';
 import Dice from '../components/dice';
+import CampaignCard from '../components/CampaignCard';
 
 // create a component
 // we are going to use the ColorList component here
 // we are going to pass a prop to the ColorList component
 const Home = () => {
     return (
-        <View style={styles.container}>
-            <View>
-                <Dice></Dice>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <View style={styles.diceSection}>
+                <Dice />
             </View>
-            <View>
-                <Text style={styles.text}>This is where the campaigns will go</Text>
+            <View style={styles.textSection}>
+                <Text style={styles.text}>Campaigns</Text>
             </View>
-            <View>
-                <ColorList barColor='#362645'></ColorList>
+            <View style={styles.cardSection}>
+                <CampaignCard />
             </View>
-        </View>
+            <View style={styles.listSection}>
+                <ColorList barColor='#362645' />
+            </View>
+        </ScrollView>
     );
 };
 
@@ -27,11 +31,30 @@ const Home = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         backgroundColor: '#1A1221',
+    },
+    contentContainer: {
+        paddingBottom: 20, // Add padding at the bottom for scrolling
+    },
+    diceSection: {
+        alignItems: 'center',
+        paddingVertical: 20,
+    },
+    textSection: {
+        alignItems: 'center',
+        paddingVertical: 10,
+    },
+    cardSection: {
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    listSection: {
+        paddingTop: 20,
+        paddingBottom: 80, // Extra padding at bottom to account for tab bar
     },
     text: {
         color: 'white',
+        fontSize: 18,
     }
 });
 

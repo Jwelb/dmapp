@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Image } from 'react-native';
 
 const Dice = () => {
     const [number, setNumber] = useState(null);
@@ -11,23 +12,67 @@ const Dice = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.number}>{number !== null ? number : 'Press the button to roll the dice'}</Text>
-            <Button title="Roll" color={'#362645'} onPress={rollDice} />
+            <View style={styles.diceContainer}>
+                <Image
+                    source={require('../assets/images/dice.png')}
+                    style={styles.image}
+                />
+                <Text style={styles.text}>
+                    {number !== null ? number : '?'}
+                </Text>
+            </View>
+            <Pressable
+                style={({ pressed }) => [
+                    styles.button,
+                    { opacity: pressed ? 0.8 : 1 }
+                ]}
+                onPress={rollDice}
+            >
+                <Text style={styles.buttonText}>ROLL</Text>
+            </Pressable>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
     },
-    number: {
-        fontSize: 32,
-        color: 'white',
+    diceContainer: {
+        position: 'relative',
+        alignItems: 'center',
+        justifyContent: 'center',
         marginBottom: 20,
     },
+    image: {
+        width: 300,
+        height: 300,
+    },
+    text: {
+        position: 'absolute',
+        fontSize: 32,
+        color: 'white',
+        textAlign: 'center',
+        top: '50%',
+        transform: [{ translateY: -16 }],
+    },
+    button: {
+        backgroundColor: '#362645',
+        paddingVertical: 12,
+        paddingHorizontal: 40,
+        borderRadius: 25,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    }
 });
 
 export default Dice;
