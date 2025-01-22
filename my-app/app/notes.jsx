@@ -1,25 +1,44 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 
-// create a component
 const Notes = () => {
+    const [noteText, setNoteText] = useState('');
+
     return (
-        <View style={styles.container}>
-            <Text>Notes</Text>
-        </View>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
+        >
+            <TextInput
+                style={styles.input}
+                multiline
+                placeholder="Start writing..."
+                placeholderTextColor="#666"
+                value={noteText}
+                onChangeText={setNoteText}
+                textAlignVertical="top"
+                autoCorrect={true}
+                selectionColor="#AD94C7"
+            />
+        </KeyboardAvoidingView>
     );
 };
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#1A1221',
+    },
+    input: {
+        flex: 1,
+        color: 'white',
+        fontSize: 16,
+        lineHeight: 24,
+        backgroundColor: '#1A1221',
+        padding: 15,
+        textAlignVertical: 'top',
     },
 });
 
-//make this component available to the app
 export default Notes;

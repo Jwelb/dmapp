@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
 import ColorList from '../components/ColorList';
 import Dice from '../components/dice';
 import CampaignCard from '../components/CampaignCard';
@@ -21,6 +21,9 @@ const Home = () => {
                 <CampaignCard />
             </View>
             <View style={styles.listSection}>
+                <View style={styles.initiativeheader}>
+                    <Text style={styles.text}>Initiative Tracker</Text> <Button title="Add" />
+                </View>
                 <ColorList barColor='#362645' />
             </View>
         </ScrollView>
@@ -32,6 +35,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1A1221',
+
+    },
+    initiativeheader: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 20,
     },
     contentContainer: {
         paddingBottom: 20, // Add padding at the bottom for scrolling
@@ -55,6 +64,7 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
         fontSize: 18,
+        fontWeight: 'bold'
     }
 });
 

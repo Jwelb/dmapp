@@ -22,17 +22,17 @@ const CampaignCard = () => {
         {
             id: 1,
             title: "Lost Mine of Phandelver",
-            imageUrl: "https://i.ibb.co/pXs4xzy/IMG-4761.jpg"
+            imageUrl: "https://www.dndbeyond.com/attachments/2/730/lmopcover.jpg"
         },
         {
             id: 2,
             title: "Curse of Strahd",
-            imageUrl: "https://example.com/image2.jpg"
+            imageUrl: "https://startplaying.games/_next/image?url=https%3A%2F%2Fspg-images.s3.us-west-1.amazonaws.com%2Fc823764a-82e0-4c1c-88ae-370f76bdd52c&w=1200&q=75"
         },
         {
             id: 3,
             title: "Storm King's Thunder",
-            imageUrl: "https://example.com/image3.jpg"
+            imageUrl: "https://www.tribality.com/wp-content/uploads/2016/09/STK_Thumbnail-768x433.jpg"
         }
     ];
 
