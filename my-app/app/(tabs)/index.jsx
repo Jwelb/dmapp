@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
-import ColorList from '../components/ColorList';
-import Dice from '../components/dice';
-import CampaignCard from '../components/CampaignCard';
+import ColorList from '../../components/ColorList';
+import Dice from '../../components/dice';
+import CampaignCard from '../../components/CampaignCard';
 
 // create a component
 // we are going to use the ColorList component here
@@ -22,7 +22,7 @@ const Home = () => {
             </View>
             <View style={styles.listSection}>
                 <View style={styles.initiativeheader}>
-                    <Text style={styles.text}>Initiative Tracker</Text> <Button title="Add" />
+                    <Text style={styles.text}>Initiative Tracker</Text>
                 </View>
                 <ColorList barColor='#362645' />
             </View>

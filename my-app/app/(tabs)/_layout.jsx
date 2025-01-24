@@ -1,11 +1,8 @@
-//import liraries
 import React from 'react';
-import { Stack } from 'expo-router';
 import { Tabs } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-// Create the main tab navigator
-const TabLayout = () => {
+export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
@@ -59,32 +56,4 @@ const TabLayout = () => {
             }} />
         </Tabs>
     );
-};
-
-// Root layout with Stack navigator
-export default function RootLayout() {
-    return (
-        <Stack
-            screenOptions={{
-                headerShown: false,
-                contentStyle: { backgroundColor: '#1A1221' }
-            }}
-        >
-            <Stack.Screen
-                name="login"
-                options={{
-                    headerShown: false,
-                }}
-            />
-            <Stack.Screen
-                name="(tabs)"
-                options={{
-                    headerShown: false,
-                }}
-            />
-        </Stack>
-    );
-}
-
-// define your styles
-
+} 

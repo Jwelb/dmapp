@@ -8,9 +8,8 @@ const Login = () => {
     const router = useRouter();
 
     const handleLogin = () => {
-        // TODO: Add actual authentication logic here
         if (email && password) {
-            router.replace('/');  // Navigate to main screen after login
+            router.replace('/(tabs)');  // Navigate to the tabs layout after login
         }
     };
 

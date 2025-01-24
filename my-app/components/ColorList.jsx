@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const ColorList = ({ barColor }) => {
     const bars = [
@@ -10,6 +11,12 @@ const ColorList = ({ barColor }) => {
 
     return (
         <View style={styles.container}>
+            <Text style={[styles.text, { color: '#666' }]}>Add your Initiative by generating an encounter or here</Text>
+            <TouchableOpacity style={[styles.bar, { backgroundColor: barColor }]}>
+                <View style={styles.iconContainer}>
+                    <MaterialCommunityIcons name="plus-circle" size={24} color="#AD94C7" />
+                </View>
+            </TouchableOpacity>
             {bars.map(bar => (
                 <View key={bar.id} style={[styles.bar, { backgroundColor: barColor }]}>
                     <Text style={styles.text}>{bar.name}</Text>
@@ -26,6 +33,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
     },
     bar: {
         width: '80%',
@@ -37,6 +48,10 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         fontSize: 16,
+        textAlign: 'center'
+    },
+    iconContainer: {
+        padding: 5,
     },
 });
 
