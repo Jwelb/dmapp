@@ -17,6 +17,7 @@ const Login = () => {
         setLoading(true);
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
+            router.replace('/(tabs)');
         }
         catch (error) {
             console.log(error);
@@ -24,7 +25,6 @@ const Login = () => {
         }
         finally {
             setLoading(false);
-            router.replace('/(tabs)');
         }
     };
 
@@ -32,7 +32,7 @@ const Login = () => {
         setLoading(true);
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
-            alert('check your email!');
+            alert('Account created!');
         }
         catch (error) {
             console.log(error);
