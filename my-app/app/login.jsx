@@ -1,17 +1,49 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import { FIREBASE_AUTH } from '../firebaseconfig';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const auth = FIREBASE_AUTH;
 
-    const handleLogin = () => {
-        if (email && password) {
-            router.replace('/(tabs)');  // Navigate to the tabs layout after login
+    // backend firebase user auth
+
+    const signIn = async () => {
+        setLoading(true);
+        try {
+            const response = await signInWithEmailAndPassword(auth, email, password);
+        }
+        catch (error) {
+            console.log(error);
+            alert('Sign in failed' + error.message);
+        }
+        finally {
+            setLoading(false);
+            router.replace('/(tabs)');
         }
     };
+
+    const signUp = async () => {
+        setLoading(true);
+        try {
+            const response = await createUserWithEmailAndPassword(auth, email, password);
+            alert('check your email!');
+        }
+        catch (error) {
+            console.log(error);
+            alert('Sign up failed' + error.message);
+        }
+        finally {
+            setLoading(false);
+            router.replace('/(tabs)');
+        }
+    };
+
 
     return (
         <View style={styles.container}>
@@ -44,18 +76,21 @@ const Login = () => {
                     selectionColor="transparent"
                     secureTextEntry
                 />
+                {loading ? <Text>Loading...</Text> : (
+                    <View>
+                        <TouchableOpacity
+                            style={styles.loginButton}
+                            onPress={signIn}
+                        >
+                            <Text style={styles.loginButtonText}>Login</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={handleLogin}
-                >
-                    <Text style={styles.loginButtonText}>Login</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.signupContainer}>
-                    <Text style={styles.signupText}>Don't have an account? </Text>
-                    <Text style={styles.signupLink}>Sign Up</Text>
-                </TouchableOpacity>
+                        <TouchableOpacity style={styles.signupContainer} onPress={signUp}>
+                            <Text style={styles.signupText}>Don't have an account? </Text>
+                            <Text style={styles.signupLink}>Sign Up</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
             </View>
         </View>
     );
