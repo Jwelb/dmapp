@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
-import { FIREBASE_AUTH } from '../firebaseconfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { FIREBASE_AUTH, FIREBASE_PROVIDER } from '../firebaseconfig';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -22,6 +22,21 @@ const Login = () => {
         catch (error) {
             console.log(error);
             alert('Sign in failed' + error.message);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+
+    const signInWithGoogle = async () => {
+        setLoading(true);
+        try {
+            const response = await signInWithPopup(auth, FIREBASE_PROVIDER);
+            router.replace('/(tabs)');
+        }
+        catch (error) {
+            console.log(error);
+            alert('Sign in with Google failed' + error.message);
         }
         finally {
             setLoading(false);
@@ -83,6 +98,13 @@ const Login = () => {
                             onPress={signIn}
                         >
                             <Text style={styles.loginButtonText}>Login</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.loginButton}
+                            onPress={signInWithGoogle}
+                        >
+                            <Text style={styles.loginButtonText}>Login with Google</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.signupContainer} onPress={signUp}>
