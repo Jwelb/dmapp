@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FIREBASE_AUTH } from '../firebaseconfig';
 const Settings = () => {
     const router = useRouter();
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>

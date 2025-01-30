@@ -13,6 +13,11 @@ A React Native mobile application designed to help Dungeon Masters manage their 
 1. Clone the repository
 2. Navigate to the app directory:
 
+
+### How to run
+- cd my-app
+- npm start or npm run ios (ios development)
+
 ## 📱 Features
 
 ### 1. Authentication
