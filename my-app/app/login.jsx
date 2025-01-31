@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
-import { FIREBASE_AUTH, FIREBASE_PROVIDER } from '../firebaseconfig';
+import { FIREBASE_AUTH, FIREBASE_PROVIDER, FIRESTORE_DB } from '../firebaseconfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -11,9 +11,9 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const auth = FIREBASE_AUTH;
-    const db = FIREBASE_DB;
+    const db = FIRESTORE_DB;
     // backend firebase user auth
-
+    // TODO: implement firestore db
     const signIn = async () => {
         setLoading(true);
         try {
@@ -43,14 +43,18 @@ const Login = () => {
             setLoading(false);
         }
     };
-
+    // TODO: Think about what else we want to store in the users collection?
+    // TODO: add user authentication throughout the entire app for when a user is logged in
     const signUp = async () => {
         setLoading(true);
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
-            alert('Account created!');
-            const docRef = doc(db, 'users', response.user.uid)
-            await setDoc(docRef, { email: email.value });
+            console.log(response.user.uid);
+            alert(`Account created for ${response.user.email}`);
+            await setDoc(doc(db, 'users', response.user.uid), {
+                email: response.user.email
+            });
+            router.replace('/(tabs)');
         }
         catch (error) {
             console.log(error);
@@ -58,7 +62,6 @@ const Login = () => {
         }
         finally {
             setLoading(false);
-            router.replace('/(tabs)');
         }
     };
 
