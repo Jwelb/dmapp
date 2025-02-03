@@ -1,4 +1,4 @@
-//import liraries
+                                                    //import liraries
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 

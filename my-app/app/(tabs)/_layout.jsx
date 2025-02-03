@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
-import SettingsModal from '../../components/SettingsModal';
+import SettingsModal from '../../componen                                                   ts/SettingsModal';
 
 // Create a custom header component
 // this was needed to add the settings button to the header
