@@ -38,23 +38,6 @@ const Login = () => {
         setIsFormValid(Object.keys(errors).length === 0)
     }
 
-    const signIn = async () => {
-        if (isFormValid) {
-            setLoading(true);
-            try {
-                const response = await signInWithEmailAndPassword(auth, email, password);
-                router.replace('/(tabs)');
-            }
-            catch (error) {
-                console.log(error);
-                alert('Sign in failed' + error.message);
-            }
-            finally {
-                setLoading(false);
-            }
-        }
-    };
-
     const signInWithGoogle = async () => {
         setLoading(true);
         try {
@@ -100,7 +83,6 @@ const Login = () => {
                 <Text style={styles.headerText}>Welcome to</Text>
                 <Text style={styles.appName}>Campaign Kingdom</Text>
             </View>
-
             <View style={styles.formContainer}>
                 <TextInput
                     style={styles.input}
@@ -122,6 +104,15 @@ const Login = () => {
                     selectionColor="transparent"
                     secureTextEntry
                 />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Confirm Password"
+                    placeholderTextColor="#666"
+                    value={password}
+                    onChangeText={setPassword}
+                    selectionColor="transparent"
+                    secureTextEntry
+                />
                 {/* Display error messages */}
                 {Object.values(errors).map((error, index) => (
                     <Text key={index} style={styles.error}>
@@ -129,27 +120,13 @@ const Login = () => {
                     </Text>
                 ))}
                 {loading ? <Text>Loading...</Text> : (
-                    <View>
-                        <TouchableOpacity
-                            style={[styles.loginButton, { opacity: isFormValid ? 1 : 0.5 }]}
-                            disabled={!isFormValid}
-                            onPress={signIn}
-                        >
-                            <Text style={styles.loginButtonText}>Login</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={styles.loginButton}
-                            onPress={signInWithGoogle}
-                        >
-                            <Text style={styles.loginButtonText}>Login with Google</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.signupContainer} onPress={signUp}>
-                            <Text style={styles.signupText}>Don't have an account? </Text>
-                            <Text style={styles.signupLink}>Sign Up</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity
+                        style={[styles.loginButton, { opacity: isFormValid ? 1 : 0.5 }]}
+                        disabled={!isFormValid}
+                        onPress={signUp}
+                    >
+                        <Text style={styles.loginButtonText}>Sign Up</Text>
+                    </TouchableOpacity>
                 )}
             </View>
         </View>
