@@ -17,6 +17,7 @@ A React Native mobile application designed to help Dungeon Masters manage their 
 ### How to run
 - cd my-app
 - npm start or npm run ios (ios development)
+- npx react-native start (metro)
 
 ## 📱 Features
 
