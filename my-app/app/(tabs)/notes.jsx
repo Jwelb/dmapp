@@ -1,27 +1,31 @@
                                                     //import liraries
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import Markdown from 'react-native-markdown-display';
 
 const Notes = () => {
     const [noteText, setNoteText] = useState('');
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
-        >
-            <TextInput
-                style={styles.input}
-                multiline
-                placeholder="Start writing..."
-                placeholderTextColor="#666"
-                value={noteText}
-                onChangeText={setNoteText}
-                textAlignVertical="top"
-                autoCorrect={true}
-                selectionColor="#AD94C7"
-            />
-        </KeyboardAvoidingView>
+        <ScrollView style={styles.container}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={styles.container}
+            >
+                <TextInput
+                    style={styles.input}
+                    multiline
+                    placeholder="Start writing..."
+                    placeholderTextColor="#666"
+                    value={noteText}
+                    onChangeText={setNoteText}
+                    textAlignVertical="top"
+                    autoCorrect={true}
+                    selectionColor="#AD94C7"
+                />
+            </KeyboardAvoidingView>
+            <Markdown>{noteText}</Markdown>
+        </ScrollView>
     );
 };
 

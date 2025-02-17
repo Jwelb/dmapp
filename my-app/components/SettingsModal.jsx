@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Modal, TouchableWithoutFeedback } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FIREBASE_AUTH } from '../firebaseconfig';
 import { useRouter } from 'expo-router';
@@ -43,7 +43,9 @@ const SettingsModal = ({ visible, onClose }) => {
             animationType="fade"
             onRequestClose={onClose}
         >
+            <TouchableOpacity style={styles.overlay} onPress={onClose}>
             <View style={styles.overlay}>
+            <TouchableWithoutFeedback>
                 <Animated.View
                     style={[
                         styles.modalContainer,
@@ -57,6 +59,7 @@ const SettingsModal = ({ visible, onClose }) => {
                         }
                     ]}
                 >
+                
                     <View style={styles.header}>
                         <Text style={styles.headerText}>Settings</Text>
                         <TouchableOpacity
@@ -76,7 +79,10 @@ const SettingsModal = ({ visible, onClose }) => {
                         </TouchableOpacity>
                     </View>
                 </Animated.View>
+            </TouchableWithoutFeedback>
+
             </View>
+            </TouchableOpacity>
         </Modal>
     );
 };
@@ -94,7 +100,7 @@ const styles = StyleSheet.create({
         minHeight: 300,
     },
     header: {
-        height: 60,
+        height: 100,
         backgroundColor: '#261C33',
         flexDirection: 'row',
         alignItems: 'center',
@@ -104,12 +110,14 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: 'white',
+        paddingTop: 30,
         fontSize: 20,
         fontWeight: 'bold',
     },
     closeButton: {
         position: 'absolute',
-        right: 16,
+        paddingTop: 30,
+        right: 30,
         height: '100%',
         justifyContent: 'center',
     },

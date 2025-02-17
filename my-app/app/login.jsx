@@ -33,7 +33,9 @@ const Login = () => {
         if (!password) {
             errors.password = 'Password is required'
         }
-
+        else {
+            setIsFormValid(true)
+        }
         setErrors(errors)
         setIsFormValid(Object.keys(errors).length === 0)
     }
@@ -108,6 +110,7 @@ const Login = () => {
                     placeholderTextColor="#666"
                     value={email}
                     onChangeText={setEmail}
+                    onChange={validationForm}
                     selectionColor="transparent"
                     autoCapitalize="none"
                     keyboardType="email-address"
@@ -119,12 +122,13 @@ const Login = () => {
                     placeholderTextColor="#666"
                     value={password}
                     onChangeText={setPassword}
+                    onChange={validationForm}
                     selectionColor="transparent"
                     secureTextEntry
                 />
                 {/* Display error messages */}
                 {Object.values(errors).map((error, index) => (
-                    <Text key={index} style={styles.error}>
+                    <Text style={styles.errorText} key={index}>
                         {error}
                     </Text>
                 ))}
@@ -174,6 +178,11 @@ const styles = StyleSheet.create({
     headerText: {
         color: 'white',
         fontSize: 24,
+        marginBottom: 10,
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 16,
         marginBottom: 10,
     },
     appName: {

@@ -12,6 +12,7 @@ const CustomHeader = ({ title }) => {
     const [isSettingsVisible, setIsSettingsVisible] = useState(false);
 
     return (
+
         <View style={styles.headerContainer}>
             <View style={styles.titleContainer}>
                 <Text style={styles.headerTitle}>{title}</Text>
@@ -95,7 +96,7 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
     header: {
         backgroundColor: '#261C33',
-        height: 60,
+        height: 100,
         justifyContent: 'center',
     },
     headerContainer: {
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         flex: 1,
+        paddingTop: 30,
         alignItems: 'center',
     },
     headerTitle: {
@@ -117,7 +119,8 @@ const styles = StyleSheet.create({
     },
     settingsButton: {
         position: 'absolute',
-        right: 16,
+        paddingTop: 30,
+        right: 30,
         height: '100%',
         justifyContent: 'center',
     },
