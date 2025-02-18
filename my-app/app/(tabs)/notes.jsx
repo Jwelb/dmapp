@@ -1,31 +1,23 @@
                                                     //import liraries
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ScrollView, Touchable, TouchableOpacity,Text } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 
+//TODO: This needs work done to have notes based on different campaigns
+// This will show the folders and notes for a selected campaign
+// This will allow the user to add notes to the campaign
+// This will allow the user to edit notes
+// This will allow the user to delete notes
+// This will allow the user to add folders
+// This will allow the user to edit folders
+// refer to the figma for the design
 const Notes = () => {
     const [noteText, setNoteText] = useState('');
 
     return (
-        <ScrollView style={styles.container}>
-            <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={styles.container}
-            >
-                <TextInput
-                    style={styles.input}
-                    multiline
-                    placeholder="Start writing..."
-                    placeholderTextColor="#666"
-                    value={noteText}
-                    onChangeText={setNoteText}
-                    textAlignVertical="top"
-                    autoCorrect={true}
-                    selectionColor="#AD94C7"
-                />
-            </KeyboardAvoidingView>
-            <Markdown>{noteText}</Markdown>
-        </ScrollView>
+        <View style={styles.container}>
+            <Text color='white'>Note 1</Text>
+        </View>
     );
 };
 
