@@ -1,22 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Modal, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Modal } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FIREBASE_AUTH } from '../firebaseconfig';
 import { useRouter } from 'expo-router';
 
-const SettingsModal = ({ visible, onClose }) => {
-    const router = useRouter();
+const AddfolderModal = ({ visible, onClose }) => {
     const slideAnim = useRef(new Animated.Value(0)).current;
-
-    const handleSignOut = async () => {
-        try {
-            await FIREBASE_AUTH.signOut();
-            onClose();  // Close the modal
-            router.replace('/login');  // Navigate to login screen
-        } catch (error) {
-            console.error('Error signing out:', error);
-        }
-    };
 
     useEffect(() => {
         if (visible) {
@@ -43,9 +32,8 @@ const SettingsModal = ({ visible, onClose }) => {
             animationType="fade"
             onRequestClose={onClose}
         >
-            <TouchableOpacity style={styles.overlay} onPress={onClose}>
-            <View style={styles.overlay}>
-            <TouchableWithoutFeedback>
+            <TouchableOpacity onPress={onClose}>
+            <View>
                 <Animated.View
                     style={[
                         styles.modalContainer,
@@ -61,7 +49,7 @@ const SettingsModal = ({ visible, onClose }) => {
                 >
                 
                     <View style={styles.header}>
-                        <Text style={styles.headerText}>Settings</Text>
+                        <Text style={styles.headerText}>Add Folder</Text>
                         <TouchableOpacity
                             style={styles.closeButton}
                             onPress={onClose}
@@ -70,15 +58,9 @@ const SettingsModal = ({ visible, onClose }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.content}>
-                        <TouchableOpacity
-                            style={styles.signOutButton}
-                            onPress={handleSignOut}
-                        >
-                            <Text style={styles.signOutText}>Sign Out</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.text}>Folder?</Text>
                     </View>
                 </Animated.View>
-            </TouchableWithoutFeedback>
 
             </View>
             </TouchableOpacity>
@@ -87,11 +69,6 @@ const SettingsModal = ({ visible, onClose }) => {
 };
 
 const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'flex-start',
-    },
     modalContainer: {
         backgroundColor: '#1A1221',
         borderBottomLeftRadius: 20,
@@ -145,4 +122,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SettingsModal; 
+export default AddfolderModal; 

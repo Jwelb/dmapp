@@ -1,8 +1,9 @@
-                                                    //import liraries
-import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ScrollView, Touchable, TouchableOpacity,Text } from 'react-native';
-import Markdown from 'react-native-markdown-display';
 
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ScrollView, Touchable, TouchableOpacity,Text, Button } from 'react-native';
+import Folder from '../../components/folder';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AddfolderModal from '../../components/addFolderModal';
 //TODO: This needs work done to have notes based on different campaigns
 // This will show the folders and notes for a selected campaign
 // This will allow the user to add notes to the campaign
@@ -13,10 +14,15 @@ import Markdown from 'react-native-markdown-display';
 // refer to the figma for the design
 const Notes = () => {
     const [noteText, setNoteText] = useState('');
-
     return (
         <View style={styles.container}>
-            <Text color='white'>Note 1</Text>
+            <Folder/>
+            <View style= {styles.buttonContainer}>
+            <TouchableOpacity>
+                <MaterialCommunityIcons name="plus-circle" size={74} color="#AD94C7" />
+            </TouchableOpacity>
+            <AddfolderModal></AddfolderModal>
+            </View>
         </View>
     );
 };
@@ -25,6 +31,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1A1221',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     input: {
         flex: 1,
@@ -35,6 +43,14 @@ const styles = StyleSheet.create({
         padding: 15,
         textAlignVertical: 'top',
     },
+    buttonContainer: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+    },
+    button: {
+        backgroundColor: '#AD94C7',
+    }
 });
 
 export default Notes;
