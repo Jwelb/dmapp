@@ -101,7 +101,7 @@ const Signup = () => {
                 ac: 10,
             });
 
-            router.replace('/(tabs)');
+            router.replace('/(tabs)/home');
         } catch (error) {
             console.log(error);
             if (error.code === 'auth/email-already-in-use') {

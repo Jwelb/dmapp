@@ -64,7 +64,7 @@ function TabLayout() {
                 tabBarLabelPosition: 'below-icon',
             }}
         >
-            <Tabs.Screen name="index" options={{
+            <Tabs.Screen name="home" options={{
                 title: 'Home',
                 headerTitle: 'Overview',
                 tabBarIcon: ({ color, size }) => (

@@ -8,7 +8,6 @@ import CampaignCard from '../../components/CampaignCard';
 // create a component
 // we are going to use the ColorList component here
 // we are going to pass a prop to the ColorList component
-//this will eventually have to be the login page
 const Home = () => {
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
-import { FIREBASE_AUTH, FIREBASE_PROVIDER, FIRESTORE_DB } from '../firebaseconfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-
-const Login = () => {
+import { FIREBASE_AUTH, FIREBASE_PROVIDER, FIRESTORE_DB } from '../firebaseconfig'
+const Index = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -45,7 +43,7 @@ const Login = () => {
             setLoading(true);
             try {
                 const response = await signInWithEmailAndPassword(auth, email, password);
-                router.replace('/(tabs)');
+                router.replace('/(tabs)/home');
             }
             catch (error) {
                 console.log(error);
@@ -225,4 +223,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Login; 
+export default Index; 

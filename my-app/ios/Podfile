@@ -13,6 +13,8 @@ install! 'cocoapods',
 
 prepare_react_native_project!
 
+use_modular_headers!
+
 target 'myapp' do
   use_expo_modules!
 
@@ -43,6 +45,11 @@ target 'myapp' do
     :app_path => "#{Pod::Config.instance.installation_root}/..",
     :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
   )
+
+  # Add Firebase pods
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
 
   post_install do |installer|
     react_native_post_install(

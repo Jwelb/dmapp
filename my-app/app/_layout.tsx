@@ -4,13 +4,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter, useSegments } from 'expo-router';
 import SettingsModal from '../components/SettingsModal';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged,User } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../firebaseconfig';
-import Login from './login';
-import Settings from './settings';
-import Signup from './signup';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
 // Create a custom header component
-const CustomHeader = ({ title }) => {
+const CustomHeader = ({ title }: { title: string }) => {
     const router = useRouter();
     const [isSettingsVisible, setIsSettingsVisible] = useState(false);
 
@@ -67,7 +66,7 @@ const TabLayout = () => {
                 tabBarLabelPosition: 'below-icon',
             }}
         >
-            <Tabs.Screen name="index" options={{
+            <Tabs.Screen name="home" options={{
                 title: 'Home',
                 headerTitle: 'Overview',
                 tabBarIcon: ({ color, size }) => (
@@ -99,28 +98,30 @@ const TabLayout = () => {
 // Root layout with Stack navigator
 export default function RootLayout() {
     const [initializing, setInitializing] = useState(true);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const router = useRouter();
     const segments = useSegments();
 
-    useEffect(() => {
-        const subscriber = onAuthStateChanged(FIREBASE_AUTH, (user) => {
-            setUser(user);
-            if (initializing) setInitializing(false);
-        });
+    const handleAuthStateChanged = (user: User | null) => {
+        console.log('onAuthStateChanged:', user);
+        setUser(user);
+        if (initializing) setInitializing(false);
+    };
 
+    useEffect(() => {
+        const subscriber = onAuthStateChanged(FIREBASE_AUTH, handleAuthStateChanged);
         return subscriber; // unsubscribe on unmount
     }, [initializing]);
 
     useEffect(() => {
         if (initializing) return;
 
-        const inAuthGroup = segments[0] === 'login';
+        const inAuthGroup = segments[0] === 'index' || segments[0] === 'signup';
 
         if (!user && !inAuthGroup) {
-            router.replace('/signup');
+            router.replace('/login');
         } else if (user && inAuthGroup) {
-            router.replace('/(tabs)');
+            router.replace('/(tabs)/home');
         }
     }, [user, initializing, segments]);
 
