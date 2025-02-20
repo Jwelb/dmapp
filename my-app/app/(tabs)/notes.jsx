@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ScrollView, Touchable, TouchableOpacity,Text, Button } from 'react-native';
 import Folder from '../../components/folder';
+import { useRouter } from 'expo-router';
+import AddFolderScreen from '../../components/AddFolderScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import AddfolderModal from '../../components/addFolderModal';
 //TODO: This needs work done to have notes based on different campaigns
 // This will show the folders and notes for a selected campaign
 // This will allow the user to add notes to the campaign
@@ -13,16 +14,27 @@ import AddfolderModal from '../../components/addFolderModal';
 // This will allow the user to edit folders
 // refer to the figma for the design
 const Notes = () => {
-    const [noteText, setNoteText] = useState('');
+    const [isAddFolderVisible, setIsAddFolderVisible] = useState(false);
+
+    const handleOpenAddFolder = () => {
+        setIsAddFolderVisible(true);
+    };
+
+    const handleCloseAddFolder = () => {
+        setIsAddFolderVisible(false);
+    };
+
     return (
         <View style={styles.container}>
-            <Folder/>
-            <View style= {styles.buttonContainer}>
-            <TouchableOpacity>
-                <MaterialCommunityIcons name="plus-circle" size={74} color="#AD94C7" />
-            </TouchableOpacity>
-            <AddfolderModal></AddfolderModal>
+            <Folder />
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={handleOpenAddFolder}>
+                    <MaterialCommunityIcons name="plus-circle" size={74} color="#AD94C7" />
+                </TouchableOpacity>
             </View>
+            {isAddFolderVisible && (
+                <AddFolderScreen onClose={handleCloseAddFolder} />
+            )}
         </View>
     );
 };

@@ -76,12 +76,7 @@ const Login = () => {
     const signUp = async () => {
         setLoading(true);
         try {
-            const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response.user.uid);
-            await setDoc(doc(db, 'users', response.user.uid), {
-                email: response.user.email
-            });
-            router.replace('/(tabs)');
+            router.navigate('/signup');
         }
         catch (error) {
             console.log(error);
@@ -142,13 +137,6 @@ const Login = () => {
                             <Text style={styles.loginButtonText}>Login</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={styles.loginButton}
-                            onPress={signInWithGoogle}
-                        >
-                            <Text style={styles.loginButtonText}>Login with Google</Text>
-                        </TouchableOpacity>
-
                         <TouchableOpacity style={styles.signupContainer} onPress={signUp}>
                             <Text style={styles.signupText}>Don't have an account? </Text>
                             <Text style={styles.signupLink}>Sign Up</Text>
@@ -165,6 +153,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#1A1221',
         padding: 20,
+        paddingTop: 50,
     },
     logoContainer: {
         alignItems: 'center',

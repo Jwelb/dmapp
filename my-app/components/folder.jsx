@@ -10,7 +10,7 @@ const Folder = () => {
     const [folders, setFolders] = useState([]);
     const [loading, setLoading] = useState(true);
     // actually fetch the folders from the database for the user
-    useEffect(() => {
+    /*useEffect(() => {
         const fetchFolders = async () => {
             try {
                 const collectionRef = collection(FIRESTORE_DB,'folders');
@@ -24,7 +24,7 @@ const Folder = () => {
             }
         }
         fetchFolders();
-    }, []);
+    }, []);*/
     return (
         <View style={styles.container}>
             <Text style={[styles.text, { color: '#666' }]}>Add your folders for your campaigns</Text>

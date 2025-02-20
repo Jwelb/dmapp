@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'reac
 import { useRouter } from 'expo-router';
 import { FIREBASE_AUTH, FIREBASE_PROVIDER, FIRESTORE_DB } from '../firebaseconfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
-const Login = () => {
+const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -14,8 +14,6 @@ const Login = () => {
     const [isFormValid, setIsFormValid] = useState(false);
     const auth = FIREBASE_AUTH;
     const db = FIRESTORE_DB;
-    // backend firebase user auth
-    // TODO: implement firestore db
 
     useEffect(() => {
         // check if user is logged in
@@ -27,52 +25,71 @@ const Login = () => {
         let errors = {};
 
         if (!email) {
-            errors.email = 'Email is required'
+            errors.email = 'Email is required';
         }
 
         if (!password) {
-            errors.password = 'Password is required'
+            errors.password = 'Password is required';
+        }
+        else{
+            setIsFormValid(true);
         }
 
-        setErrors(errors)
-        setIsFormValid(Object.keys(errors).length === 0)
-    }
-
-    const signInWithGoogle = async () => {
-        setLoading(true);
-        try {
-            const response = await signInWithPopup(auth, FIREBASE_PROVIDER);
-            router.replace('/(tabs)');
-        }
-        catch (error) {
-            console.log(error);
-            alert('Sign in with Google failed' + error.message);
-        }
-        finally {
-            setLoading(false);
-        }
+        setErrors(errors);
+        setIsFormValid(Object.keys(errors).length === 0);
     };
-    // TODO: Think about what else we want to store in the users collection?
-    // TODO: add user authentication throughout the entire app for when a user is logged in
+
     const signUp = async () => {
         setLoading(true);
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response.user.uid);
-            await setDoc(doc(db, 'users', response.user.uid), {
+            const userId = response.user.uid;
+            console.log(userId);
+            // Set user document
+            await setDoc(doc(db, 'users', userId), {
                 email: response.user.email
             });
+
+            // Add folders subcollection
+            const folderRef = await addDoc(collection(db, `users/${userId}/folders`), {
+                name: 'Spells',
+                createdAt: new Date()
+            });
+
+            // Add notes subcollection
+            await addDoc(collection(db, `users/${userId}/folders/${folderRef.id}/notes`), {
+                title: 'Fireball',
+                content: 'If a fireball is hot how come the wizard\'s hand isn\'t burnt?',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            });
+
+            // Add characters subcollection
+            await addDoc(collection(db, `users/${userId}/characters`), {
+                name: 'Placeholder',
+                class: 'Placeholder',
+                level: 1,
+                stats: { str: 10, dex: 14, int: 18 }
+            });
+
+            // Add initiatives subcollection
+            await addDoc(collection(db, `users/${userId}/initiatives`), {
+                // Add your initiative data here
+                name: 'Placeholder',
+                initiative: 10,
+                diceResult: 10,
+                hp: 10,
+                ac: 10,
+            });
+
             router.replace('/(tabs)');
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
-            alert('Sign up failed' + error.message);
-        }
-        finally {
+            alert('Sign up failed: ' + error.message);
+        } finally {
             setLoading(false);
         }
     };
-
 
     return (
         <View style={styles.container}>
@@ -110,6 +127,7 @@ const Login = () => {
                     placeholderTextColor="#666"
                     value={password}
                     onChangeText={setPassword}
+                    onChange={validationForm}
                     selectionColor="transparent"
                     secureTextEntry
                 />
@@ -122,7 +140,7 @@ const Login = () => {
                 {loading ? <Text>Loading...</Text> : (
                     <TouchableOpacity
                         style={[styles.loginButton, { opacity: isFormValid ? 1 : 0.5 }]}
-                        disabled={!isFormValid}
+                        disabled={isFormValid}
                         onPress={signUp}
                     >
                         <Text style={styles.loginButtonText}>Sign Up</Text>
@@ -138,6 +156,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#1A1221',
         padding: 20,
+        paddingTop: 50,
     },
     logoContainer: {
         alignItems: 'center',
@@ -202,6 +221,10 @@ const styles = StyleSheet.create({
         height: 200, // adjust as needed
         resizeMode: 'contain',
     },
+    error: {
+        color: 'red',
+        marginBottom: 10,
+    },
 });
 
-export default Login; 
+export default Signup;
