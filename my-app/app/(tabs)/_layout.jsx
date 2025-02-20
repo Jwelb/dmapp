@@ -31,7 +31,7 @@ const CustomHeader = ({ title }) => {
     );
 };
 
-export default function TabLayout() {
+function TabLayout() {
     return (
         <Tabs
             screenOptions={{
@@ -125,3 +125,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 }); 
+export default TabLayout;

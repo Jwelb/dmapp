@@ -1,19 +1,24 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { useAuth } from '../app/context/AuthContext';
 const ColorList = ({ barColor }) => {
     const bars = [
         { id: 1, name: 'Boblin The Goblin', hp: 100, ac: 15 },
         { id: 2, name: 'Homelander', hp: 80, ac: 12 },
         { id: 3, name: 'Obama', hp: 60, ac: 10 },
     ];
+    
+    //TODO: add initiative
+    addInitiative = () => {
+        // set doc and add initative
+    }
 
     return (
         <View style={styles.container}>
             <Text style={[styles.text, { color: '#666' }]}>Add your Initiative by generating an encounter or here</Text>
             <TouchableOpacity style={[styles.bar, { backgroundColor: barColor }]}>
-                <View style={styles.iconContainer}>
+                <View style={styles.iconContainer} onPress={addInitiative}>
                     <MaterialCommunityIcons name="plus-circle" size={24} color="#AD94C7" />
                 </View>
             </TouchableOpacity>

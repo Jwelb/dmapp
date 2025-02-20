@@ -8,6 +8,7 @@ import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const [errors, setErrors] = useState({});
@@ -15,11 +16,25 @@ const Signup = () => {
     const auth = FIREBASE_AUTH;
     const db = FIRESTORE_DB;
 
+    const login = async () => {
+        setLoading(true);
+        try {
+            router.navigate('/login');
+        }
+        catch (error) {
+            console.log(error);
+            alert('Sign up failed' + error.message);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         // check if user is logged in
         // if user is logged in, redirect to home page
         // if user is not logged in, show login page
-    }, [email, password]);
+    }, [email, password, confirmPassword]);
 
     const validationForm = () => {
         let errors = {};
@@ -31,8 +46,12 @@ const Signup = () => {
         if (!password) {
             errors.password = 'Password is required';
         }
+        if (password !== confirmPassword) {
+            errors.confirmPassword = 'Passwords do not match';
+        }
         else{
             setIsFormValid(true);
+            signUp();
         }
 
         setErrors(errors);
@@ -85,8 +104,13 @@ const Signup = () => {
             router.replace('/(tabs)');
         } catch (error) {
             console.log(error);
-            alert('Sign up failed: ' + error.message);
-        } finally {
+            if (error.code === 'auth/email-already-in-use') {
+                setErrors({email: 'Email is already in use'});
+            }
+            else {
+            setErrors(error.message);
+        } 
+    } finally {
             setLoading(false);
         }
     };
@@ -125,9 +149,8 @@ const Signup = () => {
                     style={styles.input}
                     placeholder="Confirm Password"
                     placeholderTextColor="#666"
-                    value={password}
-                    onChangeText={setPassword}
-                    onChange={validationForm}
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
                     selectionColor="transparent"
                     secureTextEntry
                 />
@@ -138,13 +161,19 @@ const Signup = () => {
                     </Text>
                 ))}
                 {loading ? <Text>Loading...</Text> : (
+                    <>
                     <TouchableOpacity
-                        style={[styles.loginButton, { opacity: isFormValid ? 1 : 0.5 }]}
-                        disabled={isFormValid}
-                        onPress={signUp}
+                        style={[styles.loginButton]}
+                        onPress={validationForm}
                     >
-                        <Text style={styles.loginButtonText}>Sign Up</Text>
+                        <Text style={styles.loginButtonText}>Get Started</Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.signupContainer} onPress={login}>
+                        <Text style={styles.signupText}>Already have an account? </Text>
+                        <Text style={styles.signupLink}>Login</Text>
+                    </TouchableOpacity>
+                </>
                 )}
             </View>
         </View>

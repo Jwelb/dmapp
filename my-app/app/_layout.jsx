@@ -5,8 +5,10 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter, useSegments } from 'expo-router';
 import SettingsModal from '../components/SettingsModal';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getAuth } from 'firebase/auth';
-
+import { FIREBASE_AUTH } from '../firebaseconfig';
+import Login from './login';
+import Settings from './settings';
+import Signup from './signup';
 // Create a custom header component
 const CustomHeader = ({ title }) => {
     const router = useRouter();
@@ -102,7 +104,7 @@ export default function RootLayout() {
     const segments = useSegments();
 
     useEffect(() => {
-        const subscriber = onAuthStateChanged(getAuth, (user) => {
+        const subscriber = onAuthStateChanged(FIREBASE_AUTH, (user) => {
             setUser(user);
             if (initializing) setInitializing(false);
         });
@@ -116,7 +118,7 @@ export default function RootLayout() {
         const inAuthGroup = segments[0] === 'login';
 
         if (!user && !inAuthGroup) {
-            router.replace('/login');
+            router.replace('/signup');
         } else if (user && inAuthGroup) {
             router.replace('/(tabs)');
         }
@@ -141,22 +143,29 @@ export default function RootLayout() {
                 name="login"
                 options={{
                     headerShown: false,
+                    title: 'Login',
                 }}
-                component={LoginScreen} // Ensure you have a LoginScreen component
+            />
+            <Stack.Screen
+                name="signup"
+                options={{
+                    headerShown: false,
+                    title: 'Signup',
+                }}
             />
             <Stack.Screen
                 name="settings"
                 options={{
                     headerShown: false,
+                    title: 'Settings',
                 }}
-                component={SettingsScreen} // Ensure you have a SettingsScreen component
             />
             <Stack.Screen
                 name="(tabs)"
                 options={{
                     headerShown: false,
+                    title: '(tabs)',
                 }}
-                component={TabLayout}
             />
         </Stack>
     );
